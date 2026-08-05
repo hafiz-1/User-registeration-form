@@ -3,123 +3,134 @@ import { useState } from "react";
 
 function App() {
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  const [users, setUsers] = useState([]);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
+    const [users, setUsers] = useState([]);
 
-  function handleSubmit(e) {
+    function handleSubmit(e) {
 
-    e.preventDefault();
+        e.preventDefault();
 
-    if (name.trim() === "") {
-      setError("Name is required");
-      return;
+        if (name.trim() === "") {
+            setError("Name is required");
+            return;
+        }
+
+        if (email.trim() === "") {
+            setError("Email is required");
+            return;
+        }
+
+        if (!email.includes("@")) {
+            setError("Enter a valid email");
+            return;
+        }
+
+        if (password.length < 8) {
+            setError("Password must be at least 8 characters");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+
+        const emailExists = users.some(
+            (user) => user.email === email
+        );
+
+        if (emailExists) {
+            setError("Email already registered");
+            return;
+        }
+
+        const newUser = {
+            name,
+            email,
+        };
+
+        setUsers([...users, newUser]);
+
+        setError("");
+
+        setName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+
     }
 
-    if (email.trim() === "") {
-      setError("Email is required");
-      return;
-    }
+    return (
 
-    if (!email.includes("@")) {
-      setError("Enter a valid email");
-      return;
-    }
+        <div className="container">
 
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters");
-      return;
-    }
+            <div className="card">
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
+                <h1>User Registration</h1>
 
-    setError("");
-    const newUser = {
+                <form onSubmit={handleSubmit}>
 
-      name,
-      email,
+                    <input
+                        type="text"
+                        placeholder="Full Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
 
-    };
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
 
-    setUsers([...users, newUser]);
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
 
-    setError("");
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
 
-  }
+                    {error && <p className="error">{error}</p>}
 
-  return (
+                    <button type="submit">
+                        Register
+                    </button>
 
-    <div className="container">
+                </form>
 
-      <div className="card">
+                <h2>Registered Users</h2>
 
-        <h1>User Registration</h1>
+                <ul className="user-list">
 
-        <form onSubmit={handleSubmit}>
+                    {users.map((user, index) => (
 
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+                        <li key={index}>
 
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+                            <strong>{user.name}</strong> - {user.email}
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+                        </li>
 
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
+                    ))}
 
-          {error && <p className="error">{error}</p>}
+                </ul>
 
-          <button type="submit">
-            Register
-          </button>
+            </div>
 
-        </form>
-       
-        <h2>Registered Users</h2>
+        </div>
 
-        <ul>
-
-          {users.map((user, index) => (
-
-            <li key={index}>
-
-              {user.name} - {user.email}
-
-            </li>
-
-          ))}
-
-        </ul>
-
-      </div>
-
-    </div>
-
-  );
+    );
 
 }
 
