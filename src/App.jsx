@@ -70,23 +70,24 @@ function App() {
 
   }
 
+  function handleDelete(indexToDelete) {
+
+    const updatedUsers = users.filter((user, index) => {
+
+      return index !== indexToDelete;
+
+    });
+
+    setUsers(updatedUsers);
+
+  }
+
   useEffect(() => {
 
     localStorage.setItem("users", JSON.stringify(users));
 
   }, [users]);
 
-  useEffect(() => {
-
-    const storedUsers = localStorage.getItem("users");
-
-    if (storedUsers) {
-
-      setUsers(JSON.parse(storedUsers));
-
-    }
-
-  }, []);
 
   return (
 
@@ -142,7 +143,17 @@ function App() {
 
             <li key={index}>
 
-              <strong>{user.name}</strong> - {user.email}
+              <div>
+                <strong>{user.name}</strong><br />
+                {user.email}
+              </div>
+
+              <button
+                className="delete-btn"
+                onClick={() => handleDelete(index)}
+              >
+                Delete
+              </button>
 
             </li>
 
