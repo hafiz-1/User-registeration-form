@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function App() {
 
@@ -15,6 +15,7 @@ function App() {
     return storedUsers ? JSON.parse(storedUsers) : [];
 
   });
+  const nameInputRef = useRef(null);
 
   function handleSubmit(e) {
 
@@ -88,6 +89,15 @@ function App() {
 
   }, [users]);
 
+  useEffect(() => {
+
+    if (nameInputRef.current) {
+
+      nameInputRef.current.focus();
+
+    }
+
+  }, []);
 
   return (
 
@@ -100,6 +110,7 @@ function App() {
         <form onSubmit={handleSubmit}>
 
           <input
+            ref={nameInputRef}
             type="text"
             placeholder="Full Name"
             value={name}
