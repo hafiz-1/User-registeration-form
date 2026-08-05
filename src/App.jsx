@@ -83,6 +83,12 @@ function App() {
 
   }
 
+  function handleClearUsers() {
+
+    setUsers([]);
+
+  }
+
   useEffect(() => {
 
     localStorage.setItem("users", JSON.stringify(users));
@@ -145,6 +151,19 @@ function App() {
           </button>
 
         </form>
+
+        {users.length > 0 && (
+
+          <button
+            className="clear-btn"
+            onClick={handleClearUsers}
+          >
+
+            Clear All Users
+
+          </button>
+
+        )}
 
         <h2>Registered Users</h2>
 

@@ -96,3 +96,17 @@ button:hover {
 .delete-btn:hover {
     background: #c62828;
 }
+
+.clear-btn{
+
+    margin-top:15px;
+
+    background:#ef4444;
+
+}
+
+.clear-btn:hover{
+
+    background:#dc2626;
+
+}
