@@ -16,24 +16,34 @@ body {
     align-items: center;
 }
 
+.layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
 .card {
-    width: 420px;
-    background: rgb(255, 254, 254);
+    width: 100%;
+    max-width: 480px;
+    background: white;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
+.users-card {
+    min-height: auto ;
+}
+
 h1 {
     text-align: center;
     color: #111827;
-    line-height: 1.1;
     margin-bottom: 25px;
 }
 
 h2 {
     color: #111827;
-    margin: 20px 0 15px;
+    margin-bottom: 20px;
 }
 
 form {
@@ -57,7 +67,7 @@ button {
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-    transition: background 0.3s ease;
+    transition: 0.3s;
 }
 
 button:hover {
@@ -67,24 +77,30 @@ button:hover {
 .error {
     color: red;
     font-size: 14px;
-    margin: 10px 0;
+}
+
+.clear-btn {
+    width: 100%;
+    margin-bottom: 20px;
+    background: #ef4444;
+}
+
+.clear-btn:hover {
+    background: #dc2626;
 }
 
 .user-list {
     list-style: none;
-    margin-top: 20px;
-    padding: 0;
 }
 
 .user-list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    text-align: left;
 }
 
 .delete-btn {
@@ -95,18 +111,4 @@ button:hover {
 
 .delete-btn:hover {
     background: #c62828;
-}
-
-.clear-btn{
-
-    margin-top:15px;
-
-    background:#ef4444;
-
-}
-
-.clear-btn:hover{
-
-    background:#dc2626;
-
 }

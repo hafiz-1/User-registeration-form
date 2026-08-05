@@ -87,6 +87,8 @@ function App() {
 
     setUsers([]);
 
+       nameInputRef.current.focus();
+
   }
 
   useEffect(() => {
@@ -108,88 +110,97 @@ function App() {
   return (
 
     <div className="container">
+      <div className="layout">
 
-      <div className="card">
+        {/* Registration Card */}
 
-        <h1>User Registration</h1>
+        <div className="card">
 
-        <form onSubmit={handleSubmit}>
+          <h1>User Registration</h1>
 
-          <input
-            ref={nameInputRef}
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <form onSubmit={handleSubmit}>
 
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            <input
+              ref={nameInputRef}
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-          {error && <p className="error">{error}</p>}
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
 
-          <button type="submit">
-            Register
-          </button>
+            {error && <p className="error">{error}</p>}
 
-        </form>
+            <button type="submit">
+              Register
+            </button>
 
-        {users.length > 0 && (
+          </form>
 
-          <button
-            className="clear-btn"
-            onClick={handleClearUsers}
-          >
+        </div>
 
-            Clear All Users
+        {/* Users Card */}
 
-          </button>
+        <div className="card users-card">
 
-        )}
+          <h2>Registered Users ({users.length})</h2>
 
-        <h2>Registered Users</h2>
+          {users.length > 0 && (
 
-        <ul className="user-list">
+            <button
+              className="clear-btn"
+              onClick={handleClearUsers}
+            >
+              Clear All Users
+            </button>
 
-          {users.map((user, index) => (
+          )}
 
-            <li key={index}>
+          <ul className="user-list">
 
-              <div>
-                <strong>{user.name}</strong><br />
-                {user.email}
-              </div>
+            {users.map((user, index) => (
 
-              <button
-                className="delete-btn"
-                onClick={() => handleDelete(index)}
-              >
-                Delete
-              </button>
+              <li key={index}>
 
-            </li>
+                <div>
+                  <strong>{user.name}</strong><br />
+                  {user.email}
+                </div>
 
-          ))}
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(index)}
+                >
+                  Delete
+                </button>
 
-        </ul>
+              </li>
+
+            ))}
+
+          </ul>
+
+        </div>
 
       </div>
 
