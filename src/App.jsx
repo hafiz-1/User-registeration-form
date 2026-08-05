@@ -1,136 +1,160 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [error, setError] = useState("");
-    const [users, setUsers] = useState([]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [users, setUsers] = useState(() => {
 
-    function handleSubmit(e) {
+    const storedUsers = localStorage.getItem("users");
 
-        e.preventDefault();
+    return storedUsers ? JSON.parse(storedUsers) : [];
 
-        if (name.trim() === "") {
-            setError("Name is required");
-            return;
-        }
+  });
 
-        if (email.trim() === "") {
-            setError("Email is required");
-            return;
-        }
+  function handleSubmit(e) {
 
-        if (!email.includes("@")) {
-            setError("Enter a valid email");
-            return;
-        }
+    e.preventDefault();
 
-        if (password.length < 8) {
-            setError("Password must be at least 8 characters");
-            return;
-        }
+    if (name.trim() === "") {
+      setError("Name is required");
+      return;
+    }
 
-        if (password !== confirmPassword) {
-            setError("Passwords do not match");
-            return;
-        }
+    if (email.trim() === "") {
+      setError("Email is required");
+      return;
+    }
 
-        const emailExists = users.some(
-            (user) => user.email === email
-        );
+    if (!email.includes("@")) {
+      setError("Enter a valid email");
+      return;
+    }
 
-        if (emailExists) {
-            setError("Email already registered");
-            return;
-        }
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return;
+    }
 
-        const newUser = {
-            name,
-            email,
-        };
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
-        setUsers([...users, newUser]);
+    const emailExists = users.some(
+      (user) => user.email === email
+    );
 
-        setError("");
+    if (emailExists) {
+      setError("Email already registered");
+      return;
+    }
 
-        setName("");
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
+    const newUser = {
+      name,
+      email,
+    };
+
+    setUsers([...users, newUser]);
+
+    setError("");
+
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+
+  }
+
+  useEffect(() => {
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+  }, [users]);
+
+  useEffect(() => {
+
+    const storedUsers = localStorage.getItem("users");
+
+    if (storedUsers) {
+
+      setUsers(JSON.parse(storedUsers));
 
     }
 
-    return (
+  }, []);
 
-        <div className="container">
+  return (
 
-            <div className="card">
+    <div className="container">
 
-                <h1>User Registration</h1>
+      <div className="card">
 
-                <form onSubmit={handleSubmit}>
+        <h1>User Registration</h1>
 
-                    <input
-                        type="text"
-                        placeholder="Full Name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
+        <form onSubmit={handleSubmit}>
 
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-                    <input
-                        type="password"
-                        placeholder="Confirm Password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-                    {error && <p className="error">{error}</p>}
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
 
-                    <button type="submit">
-                        Register
-                    </button>
+          {error && <p className="error">{error}</p>}
 
-                </form>
+          <button type="submit">
+            Register
+          </button>
 
-                <h2>Registered Users</h2>
+        </form>
 
-                <ul className="user-list">
+        <h2>Registered Users</h2>
 
-                    {users.map((user, index) => (
+        <ul className="user-list">
 
-                        <li key={index}>
+          {users.map((user, index) => (
 
-                            <strong>{user.name}</strong> - {user.email}
+            <li key={index}>
 
-                        </li>
+              <strong>{user.name}</strong> - {user.email}
 
-                    ))}
+            </li>
 
-                </ul>
+          ))}
 
-            </div>
+        </ul>
 
-        </div>
+      </div>
 
-    );
+    </div>
+
+  );
 
 }
 
